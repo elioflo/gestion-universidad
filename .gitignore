@@ -1,4 +1,6 @@
 /build/
+/nbproject/*
+nbproject/*
 nbproject/private/private.xml
 build.xml
 nbproject/build-impl.xml
