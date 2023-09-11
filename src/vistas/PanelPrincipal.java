@@ -48,7 +48,6 @@ public class PanelPrincipal extends javax.swing.JFrame {
         Admin_manipulacionNotas = new javax.swing.JMenuItem();
         Consultas_menu = new javax.swing.JMenu();
         Consultas_alumnosMateria = new javax.swing.JMenuItem();
-        Salir_menu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,10 +95,20 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         Admin_manejoInscripciones.setText("Manejo de inscripciones");
         Admin_manejoInscripciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Admin_manejoInscripciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Admin_manejoInscripcionesActionPerformed(evt);
+            }
+        });
         Admin_menu.add(Admin_manejoInscripciones);
 
         Admin_manipulacionNotas.setText("Manipulación de notas");
         Admin_manipulacionNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Admin_manipulacionNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Admin_manipulacionNotasActionPerformed(evt);
+            }
+        });
         Admin_menu.add(Admin_manipulacionNotas);
 
         jMenuBar1.add(Admin_menu);
@@ -109,18 +118,14 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         Consultas_alumnosMateria.setText("Alumnos por materia");
         Consultas_alumnosMateria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Consultas_alumnosMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Consultas_alumnosMateriaActionPerformed(evt);
+            }
+        });
         Consultas_menu.add(Consultas_alumnosMateria);
 
         jMenuBar1.add(Consultas_menu);
-
-        Salir_menu.setText("Salir");
-        Salir_menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Salir_menu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Salir_menuActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(Salir_menu);
 
         setJMenuBar(jMenuBar1);
 
@@ -139,20 +144,44 @@ public class PanelPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Alumno_formularioAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Alumno_formularioAlumnoActionPerformed
-        NewJFrame form = new NewJFrame();
-        form.show();
+        escritorio.removeAll();
+        escritorio.repaint();
+        FormularioAlumno form = new FormularioAlumno();
+        form.setVisible(true);
+        escritorio.add(form);
     }//GEN-LAST:event_Alumno_formularioAlumnoActionPerformed
 
     private void Materia_formularioMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Materia_formularioMateriaActionPerformed
+        escritorio.removeAll();
         escritorio.repaint();
         FormularioMateria form = new FormularioMateria();
         form.setVisible(true);
         escritorio.add(form);
     }//GEN-LAST:event_Materia_formularioMateriaActionPerformed
 
-    private void Salir_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir_menuActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_Salir_menuActionPerformed
+    private void Admin_manejoInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Admin_manejoInscripcionesActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        ManejoInscripciones form = new ManejoInscripciones();
+        form.setVisible(true);
+        escritorio.add(form);
+    }//GEN-LAST:event_Admin_manejoInscripcionesActionPerformed
+
+    private void Admin_manipulacionNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Admin_manipulacionNotasActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        ManipulacionNotas form = new ManipulacionNotas();
+        form.setVisible(true);
+        escritorio.add(form);
+    }//GEN-LAST:event_Admin_manipulacionNotasActionPerformed
+
+    private void Consultas_alumnosMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Consultas_alumnosMateriaActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        AlumnosXMateria form = new AlumnosXMateria();
+        form.setVisible(true);
+        escritorio.add(form);
+    }//GEN-LAST:event_Consultas_alumnosMateriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,7 +228,6 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu Consultas_menu;
     private javax.swing.JMenuItem Materia_formularioMateria;
     private javax.swing.JMenu Materia_menu;
-    private javax.swing.JMenu Salir_menu;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
