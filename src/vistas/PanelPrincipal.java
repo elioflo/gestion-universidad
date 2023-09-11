@@ -6,6 +6,7 @@
 package vistas;
 
 import accesoDeDatos.Conexion;
+import com.sun.glass.events.WindowEvent;
 import java.sql.Connection;
 
 /**
@@ -18,9 +19,13 @@ public class PanelPrincipal extends javax.swing.JFrame {
      * Creates new form PanelPrincipal
      */
     public PanelPrincipal() {
-        initComponents();
-        setLocationRelativeTo(null);
         Connection con = Conexion.getConnection();
+        if (con!=null){
+            initComponents();
+            setLocationRelativeTo(null);
+        } else {
+            System.exit(0);        
+        }
     }
 
     /**
@@ -110,6 +115,11 @@ public class PanelPrincipal extends javax.swing.JFrame {
 
         Salir_menu.setText("Salir");
         Salir_menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Salir_menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Salir_menuActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(Salir_menu);
 
         setJMenuBar(jMenuBar1);
@@ -139,6 +149,10 @@ public class PanelPrincipal extends javax.swing.JFrame {
         form.setVisible(true);
         escritorio.add(form);
     }//GEN-LAST:event_Materia_formularioMateriaActionPerformed
+
+    private void Salir_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir_menuActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_Salir_menuActionPerformed
 
     /**
      * @param args the command line arguments
