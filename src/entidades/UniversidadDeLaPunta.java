@@ -5,8 +5,10 @@
  */
 package entidades;
 
+import accesoDeDatos.AlumnoData;
 import java.sql.Connection;
 import accesoDeDatos.Conexion;
+import java.time.LocalDate;
 
 /**
  *
@@ -19,7 +21,12 @@ public class UniversidadDeLaPunta {
      */
     public static void main(String[] args) {
         
-       Connection con = Conexion.getConnection();
+       //Connection con = Conexion.getConnection();
+       Alumno juan=new Alumno (34568653,"Luna","Pedro",LocalDate.of(1980, 4, 25),true);
+        AlumnoData alu=new AlumnoData();
+        //alu.guardarAlumno(juan);
+        
+       
     }
     
 }

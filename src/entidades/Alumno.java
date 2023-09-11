@@ -12,7 +12,7 @@ import java.time.LocalDate;
  * @author valef
  */
 public class Alumno {
-  private int idAlumno;
+  private int idAlumno, dni;
   private String apellido, nombre;
   private LocalDate fechaNacimiento;
  private boolean estado;
@@ -67,12 +67,21 @@ public class Alumno {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+//faltaba el atributo dni 
+    
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
     @Override
