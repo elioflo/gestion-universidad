@@ -1,5 +1,6 @@
 package entidades;
 
+import accesoDeDatos.AlumnoData;
 import accesoDeDatos.InscripcionData;
 import java.util.List;
 
@@ -10,9 +11,11 @@ public class App {
 //    AlumnoData alu = new AlumnoData();
 //    alu.guardarAlumno(juan);
 
-    InscripcionData inscripcionData = new InscripcionData();
-    List<Inscripcion> inscripciones = inscripcionData.obtenerInscripciones();
-    inscripciones.forEach(inscripcion -> System.out.println(inscripcion.getIdInscripcion() + ":" + inscripcion.getNota()));
+//    InscripcionData inscripcionData = new InscripcionData();
+//    List<Inscripcion> inscripciones = inscripcionData.obtenerInscripciones();
+//    inscripciones.forEach(inscripcion -> System.out.println(inscripcion.getIdInscripcion() + ":" + inscripcion.getNota()));
+    System.out.println(new AlumnoData().buscarAlumnoPorDni(4574898));
+    
   }
   
 }

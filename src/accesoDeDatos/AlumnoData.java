@@ -50,7 +50,7 @@ public class AlumnoData {
             if(rs.next()){
             
              alumno.setIdAlumno(rs.getInt(1));
-             JOptionPane.showMessageDialog(null, "alumno agregado correctamente");
+             JOptionPane.showMessageDialog(null, "Alumno agregado correctamente");
             }
             
             ps.close();
@@ -58,7 +58,7 @@ public class AlumnoData {
             
         } catch (SQLException ex) {
            
-            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla alumno");
+            JOptionPane.showMessageDialog(null,"Error al acceder a la tabla Alumno");
         }
     }
     
@@ -78,10 +78,10 @@ public class AlumnoData {
             int exito = ps.executeUpdate();
             
             if (exito==1) {
-                JOptionPane.showMessageDialog(null, "alumno modificado");
+                JOptionPane.showMessageDialog(null, "Alumno modificado");
             }
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Error al accederc a la tabla Alumno");
+           JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno");
            
         }
     }
@@ -95,11 +95,11 @@ public class AlumnoData {
             ps.setInt(1, id);
             int exito=ps.executeUpdate();
             if(exito==1){
-                JOptionPane.showMessageDialog(null, "alumno eliminado");
+                JOptionPane.showMessageDialog(null, "Alumno eliminado");
             }
         } catch (SQLException ex) {
             
-           JOptionPane.showMessageDialog(null, "Error al accederc a la tabla Alumno"); 
+           JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno"); 
         }
         
     }
@@ -123,12 +123,12 @@ public class AlumnoData {
 
             } else {
 
-                JOptionPane.showMessageDialog(null, "no se encontro el alumno");
+                JOptionPane.showMessageDialog(null, "No se encontró al alumno");
 
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al accederc a la tabla Alumno");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno");
         }
 
         return alumno;
@@ -136,7 +136,7 @@ public class AlumnoData {
 
     public Alumno buscarAlumnoPorDni(int dni) {
         Alumno alumno = null;
-        String sql = "SELECT  idAlumno ,apellido,nombre,FechaNacimiento FROM alumno WHERE dni =? AND estado = 1";
+        String sql = "SELECT  idAlumno,dni,apellido,nombre,FechaNacimiento FROM alumno WHERE dni =? AND estado = 1";
         PreparedStatement ps = null;
 
         try {
@@ -155,12 +155,12 @@ public class AlumnoData {
 
             } else {
 
-                JOptionPane.showMessageDialog(null, "no se encontro el alumno");
-
+                JOptionPane.showMessageDialog(null, "No se encontró al alumno");
+                
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al accederc a la tabla Alumno");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno");
         }
 
         return alumno;
