@@ -5,11 +5,19 @@
  */
 package vistas;
 
+import accesoDeDatos.MateriaData;
+import entidades.Materia;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author lucap
  */
 public class FormularioMateria extends javax.swing.JInternalFrame {
+
+    private javax.swing.JLabel jlTitulo;
+    private boolean estado;
 
     /**
      * Creates new form FormularioMateria
@@ -33,15 +41,17 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldAnio = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
+        jLTitulo = new javax.swing.JLabel();
         jButtonBuscar = new javax.swing.JButton();
-        jButtonGuardar = new javax.swing.JButton();
-        jButtonBorrar = new javax.swing.JButton();
-        jButtonActualizar = new javax.swing.JButton();
+        jButtonNuevo = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
-        jButtonListar = new javax.swing.JButton();
+        jButtonSalir = new javax.swing.JButton();
         jRadioButtonEstado = new javax.swing.JRadioButton();
-        jTextFieldConsulta = new javax.swing.JTextField();
+        jTConsulta = new javax.swing.JTextField();
+        jButtonGuardar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTextIdVista = new javax.swing.JTextField();
+        jButtonModificar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -53,8 +63,8 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Estado");
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        jLabel10.setText("Consulta de Materias");
+        jLTitulo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLTitulo.setText("Consulta de Materias");
 
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -63,124 +73,278 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             }
         });
 
-        jButtonGuardar.setText("Guardar");
-
-        jButtonBorrar.setText("Borrar");
-
-        jButtonActualizar.setText("Actualizar");
+        jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoActionPerformed(evt);
+            }
+        });
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
 
-        jButtonListar.setText("Listar");
+        jButtonSalir.setText("Salir");
+        jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalirActionPerformed(evt);
+            }
+        });
+
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("ID");
+
+        jButtonModificar.setText("Modificar");
+        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap(64, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
-                        .addComponent(jRadioButtonEstado))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(78, 78, 78)
-                        .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(123, 123, 123)
-                                .addComponent(jLabel10))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonBuscar))))
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(60, 60, 60)
+                                .addComponent(jRadioButtonEstado)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonNuevo)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonEliminar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonGuardar)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonModificar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonSalir)
+                        .addGap(65, 65, 65))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonBuscar))
+                                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextIdVista, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(123, 123, 123))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(100, 100, 100))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jButtonGuardar)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonBorrar)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonActualizar)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonEliminar)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonListar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(153, 153, 153)
+                                .addComponent(jLTitulo))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
+                        .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jButtonBuscar)
-                            .addComponent(jTextFieldConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(16, 16, 16)
-                        .addComponent(jRadioButtonEstado))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
+                            .addComponent(jTConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonBuscar))))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonGuardar)
-                    .addComponent(jButtonBorrar)
-                    .addComponent(jButtonActualizar)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextIdVista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(jRadioButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonNuevo)
                     .addComponent(jButtonEliminar)
-                    .addComponent(jButtonListar))
+                    .addComponent(jButtonSalir)
+                    .addComponent(jButtonGuardar)
+                    .addComponent(jButtonModificar))
                 .addGap(35, 35, 35))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-       int id=Integer.parseInt(jTextFieldConsulta.getText());
-       
-       
-       
-//       ventana2 newfrane = new ventana2();
-//            newfrane.setVisible(true);
-//            this.dispose();
+
+        try {
+            int id = Integer.parseInt(jTConsulta.getText());
+            MateriaData mat = new MateriaData();
+            Materia materiaEncontrada = mat.buscarMateria(id);
+
+            if (materiaEncontrada != null) {
+                jTextFieldNombre.setText(materiaEncontrada.getNombre());
+                jTextFieldNombre.setEditable(false);
+                jTextFieldAnio.setText(String.valueOf(materiaEncontrada.getAnioMateria()));
+                jTextFieldAnio.setEditable(false);
+                jTextIdVista.setText(String.valueOf(materiaEncontrada.getIdMateria()));
+                jTextIdVista.setEditable(false);
+                jRadioButtonEstado.setText(String.valueOf(materiaEncontrada.isEstado()));
+                jRadioButtonEstado.setEnabled(false);   //*******************************************************************
+
+                jTConsulta.setText("");
+            }
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
+            jTextIdVista.setText("");
+            jTextFieldNombre.setText("");
+            jTextFieldAnio.setText("");
+            jRadioButtonEstado.setText("");
+
+        }
+
     }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+
+        jRadioButtonEstado.setEnabled(true);
+        jlTitulo = new javax.swing.JLabel();
+        jlTitulo.setText("Alta de materias");
+
+        jTConsulta.setEditable(false);
+        jTextFieldNombre.setText("");
+        jTextFieldNombre.setEditable(true);
+        jTextFieldAnio.setText("");
+        jTextFieldAnio.setEditable(true);
+        jRadioButtonEstado.setText("");
+
+        //******************************************************************
+        //          anular botones
+        jButtonEliminar.setEnabled(false);
+        jButtonModificar.setEnabled(false);
+        jButtonBuscar.setEnabled(false);
+
+        MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
+
+        List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
+
+        // Encuentra el último ID en la lista
+        int ultimoId = 0;
+        for (Materia materia : listaMaterias) {
+            if (materia.getIdMateria() > ultimoId) {
+                ultimoId = materia.getIdMateria();
+            }
+        }
+
+        // Calcula el próximo ID disponible
+        int ultimo = ultimoId + 1;
+
+        jTextIdVista.setText(String.valueOf(ultimo));
+        jTextIdVista.setEditable(false);
+
+
+    }//GEN-LAST:event_jButtonNuevoActionPerformed
+
+    private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtonSalirActionPerformed
+
+    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
+
+    }//GEN-LAST:event_jButtonModificarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+
+        // 1. Validar los datos
+        String nombre = jTextFieldNombre.getText();
+        String anio = jTextFieldAnio.getText();
+
+        if (nombre.isEmpty() || anio.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // No continúes si los datos no son válidos
+        }
+
+        // 2. Validar el estado (booleano)
+        if (!estado) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un estado válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // No continúes si el estado no es válido
+        }
+
+        // 3. Crear un objeto Materia con los datos ingresados
+        Materia nuevaMateria = new Materia(Integer.parseInt(jTextIdVista.getText()), anio, estado);
+
+        // public Materia(int idMateria, int anioMateria, String nombre, boolean estado)
+        // 4. Guardar la Materia en tu fuente de datos (por ejemplo, en MateriaData)
+        MateriaData materiaData = new MateriaData();
+        materiaData.guardarMateria(nuevaMateria); // Invoca el método para guardar
+
+        // 5. Actualizar la interfaz de usuario si es necesario (por ejemplo, limpiar campos o mostrar un mensaje de éxito)
+        // Restablecer los campos
+        jTextFieldNombre.setText("");
+        jTextFieldAnio.setText("");
+        jRadioButtonEstado.setSelected(false); // Reinicia el estado a "false" si se usa un JRadioButton
+
+        // Actualizar el próximo ID (puedes hacerlo según tu estructura de datos)
+        int ultimoId = nuevaMateria.getIdMateria();
+        jTextIdVista.setText(String.valueOf(ultimoId + 1));
+
+        // Mostrar un mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Materia guardada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonActualizar;
-    private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonGuardar;
-    private javax.swing.JButton jButtonListar;
+    private javax.swing.JButton jButtonModificar;
+    private javax.swing.JButton jButtonNuevo;
+    private javax.swing.JButton jButtonSalir;
+    private javax.swing.JLabel jLTitulo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JRadioButton jRadioButtonEstado;
+    private javax.swing.JTextField jTConsulta;
     private javax.swing.JTextField jTextFieldAnio;
-    private javax.swing.JTextField jTextFieldConsulta;
     private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextIdVista;
     // End of variables declaration//GEN-END:variables
 }
