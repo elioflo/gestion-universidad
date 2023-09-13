@@ -87,7 +87,7 @@ public class AlumnoData {
     }
     public void borrarAlumno(int dni){
         try {
-            String sql = "DELETE alumno WHERE dni=? ";
+            String sql = "DELETE FROM alumno WHERE dni=? ";
             PreparedStatement ps= con.prepareStatement(sql);
             ps.setInt(1, dni);
             int exito=ps.executeUpdate();
@@ -152,7 +152,7 @@ public class AlumnoData {
 
             } else {
 
-                JOptionPane.showMessageDialog(null, "No se PAPAPAencontró a un alumno con el DNI indicado");
+                JOptionPane.showMessageDialog(null, "No se encontró a un alumno con el DNI indicado");
                 
             }
             ps.close();

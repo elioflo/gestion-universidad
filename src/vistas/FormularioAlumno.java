@@ -250,7 +250,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                  if(boole==0){
                         new AlumnoData().borrarAlumno(Integer.parseInt(documento_text.getText()));
                   }
-            }catch(NumberFormatException ex){
+            }catch(Exception ex){
                 JOptionPane.showMessageDialog(null, "El número de documento es inválido");
             }
         }
