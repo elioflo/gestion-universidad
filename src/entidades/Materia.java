@@ -10,64 +10,66 @@ package entidades;
  * @author valef
  */
 public class Materia {
-    private int idMateria, anioMateria;
-    private String nombre;
-    private boolean estado;
 
-    public Materia() {
-    }
+  private int idMateria, anioMateria;
+  private String nombre;
+  private boolean estado;
 
-    public Materia(int idMateria, int anioMateria, String nombre, boolean estado) {
-        this.idMateria = idMateria;
-        this.anioMateria = anioMateria;
-        this.nombre = nombre;
-        this.estado = estado;
-    }
+  public Materia() {
+  }
 
-    public Materia(int anioMateria, String nombre, boolean estado) {
-        this.anioMateria = anioMateria;
-        this.nombre = nombre;
-        this.estado = estado;
-    }
+  public Materia(int idMateria, int anioMateria, String nombre, boolean estado) {
+    this.idMateria = idMateria;
+    this.anioMateria = anioMateria;
+    this.nombre = nombre;
+    this.estado = estado;
+  }
 
-    public int getIdMateria() {
-        return idMateria;
-    }
+  public Materia(int anioMateria, String nombre, boolean estado) {
+    this.anioMateria = anioMateria;
+    this.nombre = nombre;
+    this.estado = estado;
+  }
 
-    public void setIdMateria(int idMateria) {
-        this.idMateria = idMateria;
-    }
+  public int getIdMateria() {
+    return idMateria;
+  }
 
-    public int getAnioMateria() {
-        return anioMateria;
-    }
+  public void setIdMateria(int idMateria) {
+    this.idMateria = idMateria;
+  }
 
-    public void setAnioMateria(int anioMateria) {
-        this.anioMateria = anioMateria;
-    }
+  public int getAnioMateria() {
+    return anioMateria;
+  }
 
-    public String getNombre() {
-        return nombre;
-    }
+  public void setAnioMateria(int anioMateria) {
+    this.anioMateria = anioMateria;
+  }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+  public String getNombre() {
+    return nombre;
+  }
 
-    public boolean isEstado() {
-        return estado;
-    }
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
+  public boolean isEstado() {
+    return estado;
+  }
 
-    @Override
-    public String toString() {
-        return "Materia{" + "idMateria=" + idMateria + ", anioMateria=" + anioMateria + ", nombre=" + nombre + ", estado=" + estado + '}';
-    }
+  public void setEstado(boolean estado) {
+    this.estado = estado;
+  }
 
-    
-    
-    
+  @Override
+  public String toString() {
+    return "Materia{" + "idMateria=" + idMateria + ", anioMateria=" + anioMateria + ", nombre=" + nombre + ", estado=" + estado + '}';
+  }
+
+  public Object[] getData() {
+    return new Object[]{idMateria, nombre, anioMateria};
+  }
+
 }
