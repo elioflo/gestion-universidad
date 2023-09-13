@@ -242,17 +242,13 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void eliminar_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar_botonActionPerformed
         AlumnoData data = new AlumnoData();
-        if (data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))!=null){
-             try {
-                 Long lo = Long.parseLong(documento_text.getText());
-                
+        if (chequeoDocumento()){
+             if(data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))!=null){
                  int boole = JOptionPane.showConfirmDialog(null, "¿Estas seguro de eliminar este alumno?");
                  if(boole==0){
                         new AlumnoData().borrarAlumno(Integer.parseInt(documento_text.getText()));
                   }
-            }catch(Exception ex){
-                JOptionPane.showMessageDialog(null, "El número de documento es inválido");
-            }
+             }
         }
     }//GEN-LAST:event_eliminar_botonActionPerformed
 
@@ -338,5 +334,16 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     return java.util.Date.from(dateToConvert.atStartOfDay()
       .atZone(ZoneId.systemDefault())
       .toInstant());
-}
+    }
+    
+    private boolean chequeoDocumento(){
+        try {
+            Long lo = Long.parseLong(documento_text.getText());
+            
+            return true;
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "El número de documento es inválido");
+                return false;
+            }
+    }
 }
