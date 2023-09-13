@@ -78,21 +78,18 @@ public class AlumnoData {
             int exito = ps.executeUpdate();
             
             if (exito==1) {
-                JOptionPane.showMessageDialog(null, "Alumno modificado");
+                JOptionPane.showMessageDialog(null, "Alumno modificado correctamente");
             }
         } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno");
            
         }
     }
-    public void borrarAlumno(int id){
-        
-        String sql = "UPDATE alumno SET estado = 0 WHERE idAlumno=? ";
-        
-        
+    public void borrarAlumno(int dni){
         try {
+            String sql = "DELETE alumno WHERE dni=? ";
             PreparedStatement ps= con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, dni);
             int exito=ps.executeUpdate();
             if(exito==1){
                 JOptionPane.showMessageDialog(null, "Alumno eliminado");
@@ -105,7 +102,7 @@ public class AlumnoData {
     }
     public Alumno buscarAlumno(int id) {
         Alumno alumno = null;
-        String sql = "SELECT dni,apellido,nombre,FechaNacimiento FROM alumno WHERE idAlumno =? AND estado = 1";
+        String sql = "SELECT dni,apellido,nombre,FechaNacimiento FROM alumno WHERE idAlumno = ?";
         PreparedStatement ps = null;
 
         try {
@@ -136,7 +133,7 @@ public class AlumnoData {
 
     public Alumno buscarAlumnoPorDni(int dni) {
         Alumno alumno = null;
-        String sql = "SELECT  idAlumno,dni,apellido,nombre,FechaNacimiento FROM alumno WHERE dni =? AND estado = 1";
+        String sql = "SELECT  idAlumno,dni,apellido,nombre,FechaNacimiento,estado FROM alumno WHERE dni =?";
         PreparedStatement ps = null;
 
         try {
@@ -151,11 +148,11 @@ public class AlumnoData {
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNacimiento(rs.getDate("FechaNacimiento").toLocalDate());
-                alumno.setEstado(true);
+                alumno.setEstado(rs.getBoolean("estado"));
 
             } else {
 
-                JOptionPane.showMessageDialog(null, "No se encontró al alumno");
+                JOptionPane.showMessageDialog(null, "No se PAPAPAencontró a un alumno con el DNI indicado");
                 
             }
             ps.close();
