@@ -253,9 +253,12 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_eliminar_botonActionPerformed
 
     private void modificar_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificar_botonActionPerformed
-           if (chequeoExcepciones()){
+        AlumnoData data = new AlumnoData();
+        if (chequeoDocumento()){
+             if (chequeoExcepciones()){
             Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
             new AlumnoData().modificarAlumno(alumn);
+             }
         }
     }//GEN-LAST:event_modificar_botonActionPerformed
 
