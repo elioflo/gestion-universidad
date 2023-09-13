@@ -219,7 +219,6 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_nombre_textActionPerformed
 
     private void lupaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lupaActionPerformed
-        System.out.println(fecha_chooser);
         AlumnoData data = new AlumnoData();
         if (data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))!=null){
             try {
