@@ -95,7 +95,6 @@ public class AlumnoData {
                 JOptionPane.showMessageDialog(null, "Alumno eliminado");
             }
         } catch (SQLException ex) {
-            
            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno"); 
         }
         
@@ -151,19 +150,17 @@ public class AlumnoData {
                 alumno.setEstado(rs.getBoolean("estado"));
 
             } else {
-
-                JOptionPane.showMessageDialog(null, "No se encontró a un alumno con el DNI indicado");
-                
+                JOptionPane.showMessageDialog(null, "No se encontró a un alumno con el DNI ingresado");
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno");
+            JOptionPane.showMessageDialog(null, "Ya existe un alumno con el DNI ingresado");
         }
 
         return alumno;
 
     }
-public List<Alumno> listarAlumnos() {
+    public List<Alumno> listarAlumnos() {
 
         List<Alumno> alumnos = new ArrayList<>();
         try {

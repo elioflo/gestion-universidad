@@ -219,6 +219,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_nombre_textActionPerformed
 
     private void lupaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lupaActionPerformed
+        System.out.println(fecha_chooser);
         AlumnoData data = new AlumnoData();
         if (data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))!=null){
             try {
@@ -260,12 +261,15 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_modificar_botonActionPerformed
 
     private void nuevoAlumno_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAlumno_botonActionPerformed
+        AlumnoData data = new AlumnoData();
         if (chequeoExcepciones()){
-            Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
-            int boole = JOptionPane.showConfirmDialog(null, "¿Desea agregar este alumno?");
-                 if(boole==0){
-                        new AlumnoData().guardarAlumno(alumn);
-                   }
+            //if(data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))==null){
+                Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
+                int boole = JOptionPane.showConfirmDialog(null, "¿Desea agregar este alumno?");
+                if(boole==0){
+                    new AlumnoData().guardarAlumno(alumn);
+                //}
+             }
         }
     }//GEN-LAST:event_nuevoAlumno_botonActionPerformed
 
@@ -304,10 +308,14 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             Long lo = Long.parseLong(documento_text.getText());
             chequeoTexto(nombre_text);
             chequeoTexto(apellido_text);
+            chequeoDate();
             
             return true;
         }catch(NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "El número de documento no es válido");
+            return false;
+        }catch(NullPointerException ex){
+            JOptionPane.showMessageDialog(null, "No has ingresado fecha de nacimiento");
             return false;
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "El nombre o el apellido no son válidos");
@@ -316,12 +324,22 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     }
     
     private void chequeoTexto(JTextField txt){
+        if(txt.getText().equals("")){
+            int num = 10/0;
+        }
         for (int i = 0; i < txt.getText().length() ; i++) {
                 char aux = txt.getText().charAt(i);
                 if (aux=='0' || aux=='1' || aux=='2' || aux=='3' || aux=='4' || aux=='5' || aux=='6' || aux=='7' || aux=='8' || aux=='9' || aux==',' || aux=='.' || aux=='-' || aux=='_' || aux==';' || aux==':' || aux=='!' || aux=='"' || aux=='#' || aux=='$' || aux=='%' || aux=='&' || aux=='/' || aux=='(' || aux==')' || aux=='=' || aux=='?' || aux=='¡' || aux=='¿'){
                     int num = 10/0;
                 }
             }
+    }
+    
+    private void chequeoDate(){
+        if(fecha_chooser.getDate()==null){
+            Integer a = null;
+            int B = a-4;
+         }
     }
     
     public LocalDate convertirDate(Date dateToConvert) {
