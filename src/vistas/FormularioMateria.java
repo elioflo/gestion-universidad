@@ -6,6 +6,7 @@
 package vistas;
 
 import accesoDeDatos.MateriaData;
+import com.sun.corba.se.impl.protocol.JIDLLocalCRDImpl;
 import entidades.Materia;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -237,6 +238,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
 
         jRadioButtonEstado.setEnabled(true);
+
         jlTitulo = new javax.swing.JLabel();
         jlTitulo.setText("Alta de materias");
 
@@ -288,41 +290,40 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
 
-        // 1. Validar los datos
+        // Obtener los datos de la interfaz de usuario
         String nombre = jTextFieldNombre.getText();
-        String anio = jTextFieldAnio.getText();
+        String anioTexto = jTextFieldAnio.getText();
+        boolean estado = jRadioButtonEstado.isSelected();
 
-        if (nombre.isEmpty() || anio.isEmpty()) {
+        // Validar que los campos obligatorios no estén vacíos
+        if (nombre.isEmpty() || anioTexto.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // No continúes si los datos no son válidos
         }
 
-        // 2. Validar el estado (booleano)
-        if (!estado) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un estado válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            return; // No continúes si el estado no es válido
+        int anio;
+
+        try {
+            // Intentar convertir la cadena de texto a un entero
+            anio = Integer.parseInt(anioTexto);
+
+            // Resto del código para crear y guardar la Materia
+            Materia nuevaMateria = new Materia(anio, nombre, estado);
+            MateriaData materiaData = new MateriaData();
+            materiaData.guardarMateria(nuevaMateria); // Invocar el método para guardar
+
+            // Cerrar la ventana actual
+           // this.dispose();
+
+            // Restablecer los campos
+            jTextFieldNombre.setText("");
+            jTextFieldAnio.setText("");
+            jRadioButtonEstado.setSelected(false);
+            jTextIdVista.setText("");
+        } catch (NumberFormatException e) {
+            // Si ocurre una excepción al convertir a entero, muestra un mensaje de error
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un año válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        // 3. Crear un objeto Materia con los datos ingresados
-        Materia nuevaMateria = new Materia(Integer.parseInt(jTextIdVista.getText()), anio, estado);
-
-        // public Materia(int idMateria, int anioMateria, String nombre, boolean estado)
-        // 4. Guardar la Materia en tu fuente de datos (por ejemplo, en MateriaData)
-        MateriaData materiaData = new MateriaData();
-        materiaData.guardarMateria(nuevaMateria); // Invoca el método para guardar
-
-        // 5. Actualizar la interfaz de usuario si es necesario (por ejemplo, limpiar campos o mostrar un mensaje de éxito)
-        // Restablecer los campos
-        jTextFieldNombre.setText("");
-        jTextFieldAnio.setText("");
-        jRadioButtonEstado.setSelected(false); // Reinicia el estado a "false" si se usa un JRadioButton
-
-        // Actualizar el próximo ID (puedes hacerlo según tu estructura de datos)
-        int ultimoId = nuevaMateria.getIdMateria();
-        jTextIdVista.setText(String.valueOf(ultimoId + 1));
-
-        // Mostrar un mensaje de éxito
-        JOptionPane.showMessageDialog(this, "Materia guardada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
 
     }//GEN-LAST:event_jButtonGuardarActionPerformed
