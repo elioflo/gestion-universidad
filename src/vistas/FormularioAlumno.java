@@ -10,8 +10,10 @@ import entidades.Alumno;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 /**
  *
@@ -24,6 +26,8 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
      */
     public FormularioAlumno() {
         initComponents();
+        ImageIcon icon = new ImageIcon("/imagenes/lupa.png");
+        lupa.setIcon(icon);    
     }
 
     /**
@@ -73,7 +77,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             }
         });
 
-        lupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/107122.png"))); // NOI18N
+        lupa.setText("Buscar");
         lupa.setBorderPainted(false);
         lupa.setContentAreaFilled(false);
         lupa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -146,28 +150,27 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                             .addComponent(estado_boton)
                             .addComponent(fecha_chooser, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(documento_text, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(lupa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(apellido_text)
-                                .addComponent(nombre_text)))
+                                .addComponent(apellido_text, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                .addComponent(nombre_text))
+                            .addComponent(documento_text, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(50, 50, 50))))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(nuevoAlumno_boton)
-                        .addGap(18, 18, 18)
-                        .addComponent(eliminar_boton)
-                        .addGap(18, 18, 18)
-                        .addComponent(modificar_boton)
-                        .addGap(18, 18, 18)
-                        .addComponent(limpiar_boton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel1)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lupa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(33, 33, 33)
+                            .addComponent(nuevoAlumno_boton)
+                            .addGap(18, 18, 18)
+                            .addComponent(eliminar_boton)
+                            .addGap(18, 18, 18)
+                            .addComponent(modificar_boton)
+                            .addGap(18, 18, 18)
+                            .addComponent(limpiar_boton))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(65, 65, 65)
+                            .addComponent(jLabel1))))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,25 +179,20 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(documento_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lupa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(documento_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lupa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(apellido_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombre_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(estado_boton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -220,7 +218,8 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void lupaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lupaActionPerformed
         AlumnoData data = new AlumnoData();
-        if (data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))!=null){
+        if(chequeoDocumento()){
+            if (data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))!=null){
             try {
                 Long lo = Long.parseLong(documento_text.getText());
                 
@@ -232,8 +231,8 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
             }catch(NumberFormatException ex){
                 JOptionPane.showMessageDialog(null, "El número de documento es inválido");
             }
-        }
-        
+            }
+        }       
     }//GEN-LAST:event_lupaActionPerformed
 
     private void estado_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estado_botonActionPerformed
@@ -254,31 +253,39 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void modificar_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificar_botonActionPerformed
         AlumnoData data = new AlumnoData();
-        if (chequeoDocumento()){
-             if (chequeoExcepciones()){
-            Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
-            new AlumnoData().modificarAlumno(alumn);
-             }
+        if (chequeoExcepciones()){
+            int boole = JOptionPane.showConfirmDialog(null, "¿Estas seguro de modificar este alumno?");
+            if(boole==0){
+                Alumno alumn = data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()));
+                alumn.setDni(Integer.parseInt(documento_text.getText()));
+                alumn.setNombre(nombre_text.getText());
+                alumn.setApellido(apellido_text.getText());
+                alumn.setFechaNacimiento(convertirDate(fecha_chooser.getDate()));
+                data.modificarAlumno(alumn);
+            }
         }
     }//GEN-LAST:event_modificar_botonActionPerformed
 
     private void nuevoAlumno_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAlumno_botonActionPerformed
         AlumnoData data = new AlumnoData();
-        if (chequeoExcepciones()){
-            //if(data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))==null){
-                Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
+        Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
+        Alumno aux = data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()));
+        if (aux!=null){
+            data.modificarEstado(aux);
+        } else{
+            if (chequeoExcepciones()){
                 int boole = JOptionPane.showConfirmDialog(null, "¿Desea agregar este alumno?");
                 if(boole==0){
                     new AlumnoData().guardarAlumno(alumn);
-                //}
              }
+            }
         }
     }//GEN-LAST:event_nuevoAlumno_botonActionPerformed
 
     private void limpiar_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiar_botonActionPerformed
-        documento_text.setText("");
-        apellido_text.setText("");
-        nombre_text.setText("");            
+        documento_text.setText(null);
+        apellido_text.setText(null);
+        nombre_text.setText(null);            
         estado_boton.setSelected(false);
         fecha_chooser.setDate(null);
     }//GEN-LAST:event_limpiar_botonActionPerformed
