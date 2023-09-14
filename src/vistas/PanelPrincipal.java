@@ -172,7 +172,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
         escritorio.repaint();
         ManipulacionNotas form = new ManipulacionNotas();
         form.setVisible(true);
-        escritorio.add(form);
+        escritorio.add(form);  //*************************************************************************************************/
     }//GEN-LAST:event_Admin_manipulacionNotasActionPerformed
 
     private void Consultas_alumnosMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Consultas_alumnosMateriaActionPerformed

@@ -128,6 +128,10 @@ public class MateriaData {
 
             } else {
                 JOptionPane.showMessageDialog(null, "No existe esa Materia ");
+               materia.setIdMateria(0);
+               materia.setNombre("");
+               materia.setAnioMateria(0);
+               materia.setEstado(false);
             }
 
             ps.close();
