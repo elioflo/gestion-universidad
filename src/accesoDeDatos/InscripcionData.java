@@ -119,9 +119,11 @@ public class InscripcionData {
 
   public List<Materia> obtenerNOMateriasCursadas(int id) {
     String sql = "SELECT m.idMateria, m.nombre, m.anio, m.estado FROM materia m "
-            + "JOIN inscripcion i ON m.idMateria = i.idMateria "
-            + "JOIN alumno a ON a.idAlumno = i.idAlumno "
-            + "WHERE a.idAlumno != ?";
+            + "WHERE m.idMateria NOT IN ("
+            + "SELECT i.idMateria "
+            + "FROM inscripcion i "
+            + "WHERE i.idAlumno = ?"
+            + "); ";
     List<Materia> materias = new ArrayList<>();
 
     try {
