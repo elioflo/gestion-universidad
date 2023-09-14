@@ -5,9 +5,13 @@
  */
 package vistas;
 
+import accesoDeDatos.InscripcionData;
+import accesoDeDatos.MateriaData;
+import entidades.Inscripcion;
 import entidades.Materia;
 import java.awt.event.ItemEvent;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,6 +28,7 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
   public ManejoInscripciones() {
     initComponents();
     initTabla();
+    initButtons();
   }
 
   /**
@@ -46,9 +51,9 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     jScrollPane1 = new javax.swing.JScrollPane();
     tabla = new javax.swing.JTable();
     botones = new javax.swing.JPanel();
-    jButton1 = new javax.swing.JButton();
+    inscribirBtn = new javax.swing.JButton();
     filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-    jButton2 = new javax.swing.JButton();
+    anularBtn = new javax.swing.JButton();
     filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
     jButton3 = new javax.swing.JButton();
 
@@ -134,17 +139,22 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
 
     botones.setLayout(new javax.swing.BoxLayout(botones, javax.swing.BoxLayout.LINE_AXIS));
 
-    jButton1.setText("Inscribir");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
+    inscribirBtn.setText("Inscribir");
+    inscribirBtn.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton1ActionPerformed(evt);
+        inscribirBtnActionPerformed(evt);
       }
     });
-    botones.add(jButton1);
+    botones.add(inscribirBtn);
     botones.add(filler1);
 
-    jButton2.setText("Anular Inscripcion");
-    botones.add(jButton2);
+    anularBtn.setText("Anular Inscripcion");
+    anularBtn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        anularBtnActionPerformed(evt);
+      }
+    });
+    botones.add(anularBtn);
     botones.add(filler2);
 
     jButton3.setText("Salir");
@@ -211,14 +221,27 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_jButton1ActionPerformed
+  private void inscribirBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscribirBtnActionPerformed
+    if (tabla.getSelectedRow() > -1) {
+      entidades.Alumno elegido = alumnos.getItemAt(alumnos.getSelectedIndex());
+      int rowIndex = tabla.getSelectedRow();
+      int idMateria = (Integer) tabla.getValueAt(rowIndex, 0);
+      Inscripcion inscripcion = new Inscripcion();
+      inscripcion.setAlumno(elegido);
+      inscripcion.setMateria(new MateriaData().buscarMateria(idMateria));
+      new InscripcionData().guardarInscripcion(inscripcion);
+      model.removeRow(rowIndex);
+    } else {
+      JOptionPane.showMessageDialog(null, "Seleccione una materia!");
+    }
+  }//GEN-LAST:event_inscribirBtnActionPerformed
 
   private void listarMateriasInscriptas(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_listarMateriasInscriptas
     if (evt.getStateChange() == ItemEvent.SELECTED) {
       entidades.Alumno elegido = alumnos.getItemAt(alumnos.getSelectedIndex());
       llenarTabla(new accesoDeDatos.InscripcionData().obtenerMateriasCursadas(elegido.getIdAlumno()));
+      inscribirBtn.setEnabled(false);
+      anularBtn.setEnabled(true);
     }
   }//GEN-LAST:event_listarMateriasInscriptas
 
@@ -226,22 +249,37 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     if (evt.getStateChange() == ItemEvent.SELECTED) {
       entidades.Alumno elegido = alumnos.getItemAt(alumnos.getSelectedIndex());
       llenarTabla(new accesoDeDatos.InscripcionData().obtenerNOMateriasCursadas(elegido.getIdAlumno()));
+      inscribirBtn.setEnabled(true);
+      anularBtn.setEnabled(false);
     }
   }//GEN-LAST:event_listarMateriasNoInscriptas
 
   private void alumnosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_alumnosItemStateChanged
+    initButtons();
     radioButtons.clearSelection();
     limpiarTabla();
   }//GEN-LAST:event_alumnosItemStateChanged
 
+  private void anularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anularBtnActionPerformed
+    if (tabla.getSelectedRow() > -1) {
+      entidades.Alumno elegido = alumnos.getItemAt(alumnos.getSelectedIndex());
+      int rowIndex = tabla.getSelectedRow();
+      int idMateria = (Integer) tabla.getValueAt(rowIndex, 0);
+      new InscripcionData().borrarInscripcionMateriaAlumno(elegido.getIdAlumno(), idMateria);
+      model.removeRow(rowIndex);
+    } else {
+      JOptionPane.showMessageDialog(null, "Seleccione una materia!");
+    }
+  }//GEN-LAST:event_anularBtnActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JComboBox<entidades.Alumno> alumnos;
+  private javax.swing.JButton anularBtn;
   private javax.swing.JPanel botones;
   private javax.swing.Box.Filler filler1;
   private javax.swing.Box.Filler filler2;
   private javax.swing.JPanel formularioDeInscripcion;
-  private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
+  private javax.swing.JButton inscribirBtn;
   private javax.swing.JButton jButton3;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
@@ -269,5 +307,10 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     model.addColumn("Nombre");
     model.addColumn("Año");
     tabla.setModel(model);
+  }
+
+  private void initButtons() {
+    inscribirBtn.setEnabled(false);
+    anularBtn.setEnabled(false);
   }
 }
