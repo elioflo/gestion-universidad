@@ -222,6 +222,10 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                 jRadioButtonEstado.setEnabled(false);   //*******************************************************************
 
                 jTConsulta.setText("");
+                jButtonGuardar.setEnabled(false);
+                jButtonEliminar.setEnabled(false);
+                jButtonModificar.setEnabled(false);
+                jButtonBuscar.setEnabled(false);
             }
         } catch (NumberFormatException e) {
 
@@ -238,6 +242,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
 
         jRadioButtonEstado.setEnabled(true);
+        jButtonGuardar.setEnabled(true);
 
         jlTitulo = new javax.swing.JLabel();
         jlTitulo.setText("Alta de materias");
@@ -258,19 +263,21 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
 
         List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
-
+//******************************************************************************
         // Encuentra el último ID en la lista
-        int ultimoId = 0;
-        for (Materia materia : listaMaterias) {
-            if (materia.getIdMateria() > ultimoId) {
-                ultimoId = materia.getIdMateria();
-            }
-        }
-
-        // Calcula el próximo ID disponible
-        int ultimo = ultimoId + 1;
-
-        jTextIdVista.setText(String.valueOf(ultimo));
+//        int ultimoId = 0;
+//        for (Materia materia : listaMaterias) {
+//            if (materia.getIdMateria() > ultimoId) {
+//                ultimoId = materia.getIdMateria();
+//            }
+//        }
+//
+//         Calcula el próximo ID disponible
+//        int ultimo = ultimoId + 1;
+//
+//        jTextIdVista.setText(String.valueOf(ultimo));
+//****************************************************************************** 
+        jTextIdVista.setText("");
         jTextIdVista.setEditable(false);
 
 
@@ -313,8 +320,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             materiaData.guardarMateria(nuevaMateria); // Invocar el método para guardar
 
             // Cerrar la ventana actual
-           // this.dispose();
-
+            // this.dispose();
             // Restablecer los campos
             jTextFieldNombre.setText("");
             jTextFieldAnio.setText("");
