@@ -136,7 +136,7 @@ public class AlumnoData {
 
     public Alumno buscarAlumnoPorDni(int dni) {
         Alumno alumno = null;
-        String sql = "SELECT  idAlumno,dni,apellido,nombre,FechaNacimiento,estado FROM alumno WHERE dni =?";
+        String sql = "SELECT  idAlumno,apellido,nombre,FechaNacimiento,estado FROM alumno WHERE dni =?";
         PreparedStatement ps = null;
 
         try {
