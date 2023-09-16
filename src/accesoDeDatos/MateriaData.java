@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package accesoDeDatos;
+
 import entidades.Materia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
  * @author valef
  */
 public class MateriaData {
+
     private Connection con = null;
 
     public MateriaData() {
@@ -127,11 +129,13 @@ public class MateriaData {
                 materia.setEstado(true);
 
             } else {
+
                 JOptionPane.showMessageDialog(null, "No existe esa Materia ");
-               materia.setIdMateria(0);
-               materia.setNombre("");
-               materia.setAnioMateria(0);
-               materia.setEstado(false);
+
+                materia.setIdMateria(-1); // Por ejemplo, -1 puede representar una materia inexistente
+                materia.setNombre(""); // Establece un nombre vacío
+                materia.setAnioMateria(-1); // Un valor negativo o -1 puede representar que el año no está definido
+                materia.setEstado(false); // Establece el estado en "false"
             }
 
             ps.close();
@@ -144,31 +148,30 @@ public class MateriaData {
 
     //***************************************************************************************************************
     //      LISTAR  
-    public List<Materia> listarMateria(){
+    public List<Materia> listarMateria() {
 
         String sql = "SELECT  idMateria ,nombre , anio ,estado FROM materia WHERE  estado=1";
         ArrayList<Materia> materias = new ArrayList<>();
 
         try {
             try (PreparedStatement ps = con.prepareStatement(sql)) {
-                ResultSet rs= ps.executeQuery();
-                while(rs.next()){
-                    
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+
                     Materia materia = new Materia();
-                    
+
                     materia.setIdMateria(rs.getInt("idMateria"));
                     materia.setNombre(rs.getString("nombre"));
                     materia.setAnioMateria(rs.getInt("anio"));
                     materia.setEstado(true);
-                    
-                  materias.add(materia);
-                    
+
+                    materias.add(materia);
+
                 }
             }
         } catch (SQLException ex) {
-          JOptionPane.showMessageDialog(null, "Error al acceder a Materia ");
+            JOptionPane.showMessageDialog(null, "Error al acceder a Materia ");
         }
-return materias;
+        return materias;
     }
 }
-
