@@ -65,7 +65,7 @@ public class Materia {
 
   @Override
   public String toString() {
-    return  nombre + " " + anioMateria + ", id: "+ idMateria+ ", " + estado;
+    return "Materia{" + "idMateria=" + idMateria + ", anioMateria=" + anioMateria + ", nombre=" + nombre + ", estado=" + estado + '}';
   }
 
   public Object[] getData() {
