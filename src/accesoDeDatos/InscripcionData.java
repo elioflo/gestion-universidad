@@ -12,8 +12,6 @@ import javax.swing.JOptionPane;
 public class InscripcionData {
 
   private Connection con = null;
-  private MateriaData materiaData;
-  private AlumnoData alumnoData;
 
   public InscripcionData() {
     con = Conexion.getConnection();
@@ -53,7 +51,7 @@ public class InscripcionData {
 
         Inscripcion inscripcion = new Inscripcion();
         inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
-//        inscripcion.setMateria(alumnoData.buscarAlumno(rs.getInt("idAlumno")));
+//        inscripcion.setAlumno(alumnoData.buscarAlumno(rs.getInt("idAlumno")));
 //        inscripcion.setMateria(materiaData.buscarMateria(rs.getInt("idMateria")));
         inscripcion.setNota(rs.getInt("nota"));
 
@@ -67,7 +65,11 @@ public class InscripcionData {
   }
 
   public List<Inscripcion> obtenerInscripcionesPorAlumno(int id) {
-    String sql = "SELECT  idInscripcion, idAlumno, idMateria, nota FROM inscripcion WHERE idAlumno=?";
+    String sql = "SELECT  i.idInscripcion, i.idAlumno, i.idMateria, i.nota, a.nombre as 'nombreAlumno', a.apellido, a.dni, a.fechaNacimiento, a.estado, m.nombre, m.anio, m.estado \n"
+            + "FROM inscripcion i \n"
+            + "JOIN alumno a ON a.idAlumno = i.idAlumno\n"
+            + "JOIN materia m ON m.idMateria = i.idMateria\n"
+            + "WHERE i.idAlumno=?;";
     List<Inscripcion> inscripciones = new ArrayList<>();
 
     try {
@@ -78,12 +80,20 @@ public class InscripcionData {
 
         Inscripcion inscripcion = new Inscripcion();
         inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
-//        inscripcion.setMateria(alumnoData.buscarAlumno(rs.getInt("idAlumno")));
-//        inscripcion.setMateria(materiaData.buscarMateria(rs.getInt("idMateria")));
+        inscripcion.setAlumno(new Alumno(rs.getInt("idAlumno"),
+                rs.getInt("dni"),
+                rs.getString("apellido"),
+                rs.getString("nombreAlumno"),
+                rs.getDate("fechaNacimiento").toLocalDate(),
+                rs.getBoolean("estado")));
+        inscripcion.setMateria(new Materia(rs.getInt("idMateria"),
+                rs.getInt("anio"),
+                rs.getString("nombre"),
+                rs.getBoolean("estado")));
         inscripcion.setNota(rs.getInt("nota"));
 
+        System.out.println(inscripcion);
         inscripciones.add(inscripcion);
-
       }
     } catch (SQLException ex) {
       JOptionPane.showMessageDialog(null, "Error al acceder a la tabla 'inscripcion' ");
