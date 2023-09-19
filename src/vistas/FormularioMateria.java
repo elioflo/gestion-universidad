@@ -7,6 +7,7 @@ package vistas;
 
 import accesoDeDatos.MateriaData;
 import entidades.Materia;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -37,7 +38,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLlisAlumno = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -57,7 +58,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jLabel1.setText("ID");
+        jLlisAlumno.setText("ID");
 
         jLabel7.setText("Nombre");
 
@@ -161,7 +162,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                                 .addGap(153, 153, 153)
                                 .addComponent(jLTitulo))
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLlisAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -172,7 +173,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
+                            .addComponent(jLlisAlumno)
                             .addComponent(jTConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonBuscar))))
                 .addGap(30, 30, 30)
@@ -265,7 +266,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         jButtonModificar.setEnabled(false);
         jButtonBuscar.setEnabled(false);
 
-        MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
+       // MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
 
 //        List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
 //******************************************************************************
@@ -297,9 +298,9 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 //        Para lograr que un botón permita editar los campos cuando se pulsa una vez y guardar
 //        los cambios cuando se pulsa nuevamente,  utilizo una variable booleana que
 //        cambia su valor cada vez que se pulsa el botón
-        jButtonGuardar.setEnabled(false);
-        jButtonEliminar.setEnabled(false);
-        jButtonNuevo.setEnabled(false);
+             jButtonGuardar.setEnabled(false);
+             jButtonEliminar.setEnabled(false);
+             jButtonNuevo.setEnabled(false);
         try {
             if (!isEditando) {
                 // Habilitar la edición de los campos de texto
@@ -317,13 +318,45 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
                 // Crear una instancia de MateriaData y modificar la Materia
                 MateriaData modificar = new MateriaData();
-                modificar.modificarMateria(materia);
+
+               
+                
+                 List<Materia> materiasDuplicadas = modificar.buscarMateriasDuplicadas();
+        
+        // Validar si la materia actual está duplicada
+        boolean isDuplicada = false;
+        for (Materia duplicada : materiasDuplicadas) {
+            if (duplicada.getNombre().equals(materia.getNombre()) && duplicada.getAnioMateria() == materia.getAnioMateria()) {
+                isDuplicada = true;
+                break;
+            } 
+                 
+            
+        }
+        
+        if (!isDuplicada) {
+            modificar.modificarMateria(materia);
+            jTConsulta.setText("");
+            jTextIdVista.setText("");
+            jTextFieldNombre.setText("");
+            jTextFieldAnio.setText("");
+            jRadioButtonEstado.setText("");
+            // Deshabilitar la edición de los campos de texto
+            jTextFieldNombre.setEditable(false);
+            jTextFieldAnio.setEditable(false);
+            jRadioButtonEstado.setEnabled(false);
+            isEditando = false; // Cambia a modo no edición
+        } else {
+            JOptionPane.showMessageDialog(this, "Ya existe una materia con el mismo nombre y año.");
+        }
+    
 
                 // Deshabilitar la edición de los campos de texto
                 jTextFieldNombre.setEditable(false);
                 jTextFieldAnio.setEditable(false);
                 jRadioButtonEstado.setEnabled(false);
                 isEditando = false; // Cambia a modo no edición
+
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
@@ -405,11 +438,11 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonNuevo;
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JLabel jLTitulo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLlisAlumno;
     private javax.swing.JRadioButton jRadioButtonEstado;
     private javax.swing.JTextField jTConsulta;
     private javax.swing.JTextField jTextFieldAnio;

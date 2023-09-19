@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javax.management.Query.and;
 import javax.swing.JOptionPane;
 
 /**
@@ -69,19 +70,19 @@ public class MateriaData {
 
         String sql = "UPDATE materia SET nombre=?, anio=?  Where IDMateria=? ";
         try {
+
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, materia.getNombre());
             ps.setInt(2, materia.getAnioMateria());
             ps.setInt(3, materia.getIdMateria());
-        //   ps.setBoolean(4, materia.isEstado());   
-        
+            //   ps.setBoolean(4, materia.isEstado());   
+
             int exito = ps.executeUpdate();
 
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Materia modificada");
             }
-
         } catch (SQLException ex) {
 
             JOptionPane.showMessageDialog(null, "Error al acceder a la Materia ");
@@ -164,11 +165,32 @@ public class MateriaData {
                 materias.add(materia);
             }
 
-//                   
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a Materia");
+            JOptionPane.showMessageDialog(null, "Error al acceder a Materia...");
 
         }
         return materias;
     }
+    
+    //*************************************************************************
+            //      materias repetidas
+    
+    public List<Materia> buscarMateriasDuplicadas() {
+    String sql = "SELECT nombre, anio FROM materia GROUP BY nombre, anio HAVING COUNT(*) > 1";
+    ArrayList<Materia> materiasDuplicadas = new ArrayList<>();
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Materia materia = new Materia();
+            materia.setNombre(rs.getString("nombre"));
+            materia.setAnioMateria(rs.getInt("anio"));
+            materiasDuplicadas.add(materia);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar materias duplicadas...");
+    }
+    return materiasDuplicadas;
+}
+
 }
