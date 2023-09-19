@@ -14,7 +14,7 @@ public class App {
 //    InscripcionData inscripcionData = new InscripcionData();
 //    List<Inscripcion> inscripciones = inscripcionData.obtenerInscripciones();
 //    inscripciones.forEach(inscripcion -> System.out.println(inscripcion.getIdInscripcion() + ":" + inscripcion.getNota()));
-    System.out.println(new AlumnoData().buscarAlumnoPorDni(4574898));
+    //System.out.println(new AlumnoData().buscarAlumno(21));
     
   }
   
