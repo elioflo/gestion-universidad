@@ -6,8 +6,9 @@
 package vistas;
 
 import accesoDeDatos.MateriaData;
+import com.sun.corba.se.impl.protocol.JIDLLocalCRDImpl;
 import entidades.Materia;
-import javax.swing.JLabel;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,13 +19,11 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
     private javax.swing.JLabel jlTitulo;
     private boolean estado;
-    private boolean isEditando = false;
 
     /**
      * Creates new form FormularioMateria
      */
     public FormularioMateria() {
-
         initComponents();
     }
 
@@ -224,20 +223,13 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
                 jTConsulta.setText("");
                 jButtonGuardar.setEnabled(false);
-                // jButtonEliminar.setEnabled(false);
-                // jButtonModificar.setEnabled(false);
-
-            } else {
-                jTConsulta.setText("");
-                jTextIdVista.setText("");
-                jTextFieldNombre.setText("");
-                jTextFieldAnio.setText("");
-                jRadioButtonEstado.setText("");
+                jButtonEliminar.setEnabled(false);
+                jButtonModificar.setEnabled(false);
+                jButtonBuscar.setEnabled(false);
             }
         } catch (NumberFormatException e) {
 
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
-            jTConsulta.setText("");
             jTextIdVista.setText("");
             jTextFieldNombre.setText("");
             jTextFieldAnio.setText("");
@@ -248,15 +240,18 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
-        jRadioButtonEstado.setSelected(true);
+
         jRadioButtonEstado.setEnabled(true);
         jButtonGuardar.setEnabled(true);
+
+        jlTitulo = new javax.swing.JLabel();
+        jlTitulo.setText("Alta de materias");
 
         jTConsulta.setEditable(false);
         jTextFieldNombre.setText("");
         jTextFieldNombre.setEditable(true);
         jTextFieldAnio.setText("");
-        jTextFieldAnio.setEditable(true);       //********************************************
+        jTextFieldAnio.setEditable(true);
         jRadioButtonEstado.setText("");
 
         //******************************************************************
@@ -267,7 +262,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
         MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
 
-//        List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
+        List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
 //******************************************************************************
         // Encuentra el último ID en la lista
 //        int ultimoId = 0;
@@ -294,67 +289,10 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
 
-//        Para lograr que un botón permita editar los campos cuando se pulsa una vez y guardar
-//        los cambios cuando se pulsa nuevamente,  utilizo una variable booleana que
-//        cambia su valor cada vez que se pulsa el botón
-        jButtonGuardar.setEnabled(false);
-        jButtonEliminar.setEnabled(false);
-        jButtonNuevo.setEnabled(false);
-        try {
-            if (!isEditando) {
-                // Habilitar la edición de los campos de texto
-                jTextFieldNombre.setEditable(true);
-                jTextFieldAnio.setEditable(true);
-                jRadioButtonEstado.setEnabled(false);
-                isEditando = true; // Cambia a modo edición
-            } else {
-                // Crear una instancia de Materia y establecer sus propiedades
-                Materia materia = new Materia();
-                materia.setNombre(jTextFieldNombre.getText());
-                materia.setAnioMateria(Integer.parseInt(jTextFieldAnio.getText()));
-                materia.setIdMateria(Integer.parseInt(jTextIdVista.getText()));
-                materia.setEstado(jRadioButtonEstado.isSelected());
-
-                // Crear una instancia de MateriaData y modificar la Materia
-                MateriaData modificar = new MateriaData();
-                modificar.modificarMateria(materia);
-
-                // Deshabilitar la edición de los campos de texto
-                jTextFieldNombre.setEditable(false);
-                jTextFieldAnio.setEditable(false);
-                jRadioButtonEstado.setEnabled(false);
-                isEditando = false; // Cambia a modo no edición
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
-        }
-
-
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-
-        try {
-            // Obtener el ID de la materia
-            int id = Integer.parseInt(jTextIdVista.getText());
-
-            // Crear una instancia de MateriaData
-            MateriaData mat = new MateriaData();
-
-            // Llamar al método eliminarMateria
-            mat.eliminarMateria(id);
-
-            // Limpia los campos del formulario después de eliminar
-            jTextIdVista.setText("");
-            jTextFieldNombre.setText("");
-            jTextFieldAnio.setText("");
-            jRadioButtonEstado.setSelected(false);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
-        }
-
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
@@ -366,7 +304,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
         // Validar que los campos obligatorios no estén vacíos
         if (nombre.isEmpty() || anioTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.");
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // No continúes si los datos no son válidos
         }
 
@@ -376,18 +314,18 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
             // Intentar convertir la cadena de texto a un entero
             anio = Integer.parseInt(anioTexto);
 
-            // Crear una instancia de la materia con los datos ingresados
+            // Resto del código para crear y guardar la Materia
             Materia nuevaMateria = new Materia(anio, nombre, estado);
-
-            // Crear una instancia de la clase MateriaData
             MateriaData materiaData = new MateriaData();
-            materiaData.guardarMateria(nuevaMateria);
+            materiaData.guardarMateria(nuevaMateria); // Invocar el método para guardar
 
-            // Restablecer los campos después de guardar
+            // Cerrar la ventana actual
+            // this.dispose();
+            // Restablecer los campos
             jTextFieldNombre.setText("");
             jTextFieldAnio.setText("");
             jRadioButtonEstado.setSelected(false);
-
+            jTextIdVista.setText("");
         } catch (NumberFormatException e) {
             // Si ocurre una excepción al convertir a entero, muestra un mensaje de error
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un año válido.", "Error", JOptionPane.ERROR_MESSAGE);
