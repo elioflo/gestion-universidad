@@ -20,7 +20,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
     private javax.swing.JLabel jlTitulo;
     private boolean estado;
-
+private  boolean isEditando;
     /**
      * Creates new form FormularioMateria
      */
@@ -225,8 +225,8 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                 jTConsulta.setText("");
                 jButtonGuardar.setEnabled(false);
                 jButtonEliminar.setEnabled(false);
-                jButtonModificar.setEnabled(false);
-                jButtonBuscar.setEnabled(false);
+               //jButtonModificar.setEnabled(false);
+               jButtonBuscar.setEnabled(false);
             }
         } catch (NumberFormatException e) {
 
@@ -263,7 +263,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
        // MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
 
-        List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
+       // List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
 //******************************************************************************
         // Encuentra el último ID en la lista
 //        int ultimoId = 0;
