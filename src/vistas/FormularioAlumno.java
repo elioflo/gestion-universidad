@@ -330,7 +330,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private boolean chequeoExcepciones(){
         try{
-            Long lo = Long.parseLong(documento_text.getText());
+            Integer lo = Integer.parseInt(documento_text.getText());
             chequeoTexto(nombre_text);
             chequeoTexto(apellido_text);
             chequeoDate();
@@ -381,7 +381,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     
     private boolean chequeoDocumento(){
         try {
-            Long lo = Long.parseLong(documento_text.getText());
+            Integer lo = Integer.parseInt(documento_text.getText());
             
             return true;
             }catch(Exception ex){
