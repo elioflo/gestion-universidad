@@ -65,7 +65,7 @@ private  boolean isEditando;
 
         jLabel9.setText("Estado");
 
-        jLTitulo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLTitulo.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLTitulo.setText("Consulta de Materias");
 
         jButtonBuscar.setText("Buscar");
@@ -117,7 +117,7 @@ private  boolean isEditando;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
+                .addContainerGap(47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +137,7 @@ private  boolean isEditando;
                         .addComponent(jButtonModificar)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonSalir)
-                        .addGap(65, 65, 65))
+                        .addContainerGap(65, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -158,7 +158,7 @@ private  boolean isEditando;
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(153, 153, 153)
+                                .addGap(85, 85, 85)
                                 .addComponent(jLTitulo))
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLlisAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -224,9 +224,9 @@ private  boolean isEditando;
 
                 jTConsulta.setText("");
                 jButtonGuardar.setEnabled(false);
-                jButtonEliminar.setEnabled(false);
-               //jButtonModificar.setEnabled(false);
-               jButtonBuscar.setEnabled(false);
+                //jButtonEliminar.setEnabled(false);
+               jButtonModificar.setEnabled(false);
+              // jButtonBuscar.setEnabled(false);
             }
         } catch (NumberFormatException e) {
 
@@ -375,7 +375,7 @@ private  boolean isEditando;
 
         // Validar que los campos obligatorios no estén vacíos
         if (nombre.isEmpty() || anioTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.");
             return; // No continúes si los datos no son válidos
         }
 
@@ -388,6 +388,14 @@ private  boolean isEditando;
             // Resto del código para crear y guardar la Materia
             Materia nuevaMateria = new Materia(anio, nombre, estado);
             MateriaData materiaData = new MateriaData();
+            
+            for (Materia materiaExistente : materiaData.listarMateria()) {
+    if (materiaExistente.getNombre().equals(nombre) && materiaExistente.getAnioMateria()== anio) {
+        JOptionPane.showMessageDialog(this, "Ya existe una materia con el mismo nombre y año.");
+        return; // No agregues la nueva materia si ya existe una igual
+    }
+}
+            
             materiaData.guardarMateria(nuevaMateria); // Invocar el método para guardar
 
             // Cerrar la ventana actual
