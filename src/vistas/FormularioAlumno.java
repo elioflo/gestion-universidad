@@ -7,6 +7,7 @@ package vistas;
 
 import accesoDeDatos.AlumnoData;
 import entidades.Alumno;
+import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -66,6 +67,12 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         jLabel1.setText("Información de los alumnos");
 
         jLabel2.setText("Documento:");
+
+        documento_text.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                documento_textActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Apellido:");
 
@@ -198,8 +205,8 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                    .addComponent(fecha_chooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fecha_chooser, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nuevoAlumno_boton)
@@ -221,7 +228,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         if(chequeoDocumento()){
             if (data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()))!=null){
             try {
-                Long lo = Long.parseLong(documento_text.getText());
+                Integer lo = Integer.parseInt(documento_text.getText());
                 
                 Alumno alumno = data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()));
                 apellido_text.setText(alumno.getApellido());
@@ -268,9 +275,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void nuevoAlumno_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAlumno_botonActionPerformed
         AlumnoData data = new AlumnoData();
-        Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
-        Alumno aux = data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()));
-        if (aux!=null){
+        try {
+            Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
+            Alumno aux = data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()));
+            
+            if (aux!=null){
             data.modificarEstado(aux);
         } else{
             if (chequeoExcepciones()){
@@ -279,6 +288,9 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                     new AlumnoData().guardarAlumno(alumn);
              }
             }
+        }
+        } catch(NumberFormatException ex){
+             JOptionPane.showMessageDialog(null, "El número de documento no es válido");
         }
     }//GEN-LAST:event_nuevoAlumno_botonActionPerformed
 
@@ -289,6 +301,10 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
         estado_boton.setSelected(false);
         fecha_chooser.setDate(null);
     }//GEN-LAST:event_limpiar_botonActionPerformed
+
+    private void documento_textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_documento_textActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_documento_textActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -314,7 +330,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private boolean chequeoExcepciones(){
         try{
-            Long lo = Long.parseLong(documento_text.getText());
+            Integer lo = Integer.parseInt(documento_text.getText());
             chequeoTexto(nombre_text);
             chequeoTexto(apellido_text);
             chequeoDate();
@@ -365,7 +381,7 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     
     private boolean chequeoDocumento(){
         try {
-            Long lo = Long.parseLong(documento_text.getText());
+            Integer lo = Integer.parseInt(documento_text.getText());
             
             return true;
             }catch(Exception ex){
