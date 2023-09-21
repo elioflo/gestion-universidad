@@ -275,9 +275,11 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
 
     private void nuevoAlumno_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAlumno_botonActionPerformed
         AlumnoData data = new AlumnoData();
-        Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
-        Alumno aux = data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()));
-        if (aux!=null){
+        try {
+            Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
+            Alumno aux = data.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()));
+            
+            if (aux!=null){
             data.modificarEstado(aux);
         } else{
             if (chequeoExcepciones()){
@@ -286,6 +288,9 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
                     new AlumnoData().guardarAlumno(alumn);
              }
             }
+        }
+        } catch(NumberFormatException ex){
+             JOptionPane.showMessageDialog(null, "El número de documento no es válido");
         }
     }//GEN-LAST:event_nuevoAlumno_botonActionPerformed
 
