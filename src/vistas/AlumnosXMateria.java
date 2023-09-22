@@ -81,6 +81,11 @@ public class AlumnosXMateria extends javax.swing.JInternalFrame {
 
         jBSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBSalir.setText("Salir");
+        jBSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,6 +147,12 @@ public class AlumnosXMateria extends javax.swing.JInternalFrame {
         
     
     }//GEN-LAST:event_jCbMateriasActionPerformed
+
+    private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
+        // TODO add your handling code here:
+         this.dispose();
+        
+    }//GEN-LAST:event_jBSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
