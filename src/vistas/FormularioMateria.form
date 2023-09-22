@@ -43,15 +43,10 @@
                           <Component id="jLlisAlumno" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jRadioButtonEstado" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                      <Component id="jTextFieldAnio" alignment="1" min="-2" pref="261" max="-2" attributes="0"/>
-                                      <Component id="jTextFieldNombre" min="-2" pref="261" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jRadioButtonEstado" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Component id="jTextFieldAnio" alignment="1" min="-2" pref="261" max="-2" attributes="0"/>
+                              <Component id="jTextFieldNombre" min="-2" pref="261" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -202,6 +197,9 @@
     <Component class="javax.swing.JRadioButton" name="jRadioButtonEstado">
     </Component>
     <Component class="javax.swing.JTextField" name="jTConsulta">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTConsultaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonGuardar">
       <Properties>

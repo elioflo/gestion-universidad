@@ -6,10 +6,8 @@
 package vistas;
 
 import accesoDeDatos.MateriaData;
-import com.sun.corba.se.impl.protocol.JIDLLocalCRDImpl;
 import entidades.Materia;
 import java.util.List;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +18,8 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
     private javax.swing.JLabel jlTitulo;
     private boolean estado;
-private  boolean isEditando;
+    private boolean isEditando;
+
     /**
      * Creates new form FormularioMateria
      */
@@ -97,6 +96,12 @@ private  boolean isEditando;
             }
         });
 
+        jTConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTConsultaActionPerformed(evt);
+            }
+        });
+
         jButtonGuardar.setText("Guardar");
         jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,13 +139,10 @@ private  boolean isEditando;
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLlisAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButtonEstado)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addComponent(jRadioButtonEstado)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jTextFieldAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jTextIdVista, javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,12 +226,18 @@ private  boolean isEditando;
                 jTextIdVista.setEditable(false);
                 jRadioButtonEstado.setText(String.valueOf(materiaEncontrada.isEstado()));
                 jRadioButtonEstado.setEnabled(false);   //*******************************************************************
-
+                
                 jTConsulta.setText("");
                 jButtonGuardar.setEnabled(false);
                 //jButtonEliminar.setEnabled(false);
-               jButtonModificar.setEnabled(false);
-              // jButtonBuscar.setEnabled(false);
+                //jButtonModificar.setEnabled(false);
+                // jButtonBuscar.setEnabled(false);
+            } else {
+                jTConsulta.setText("");
+                jTextIdVista.setText("");
+                jTextFieldNombre.setText("");
+                jTextFieldAnio.setText("");
+                jRadioButtonEstado.setText("");
             }
         } catch (NumberFormatException e) {
 
@@ -246,6 +254,7 @@ private  boolean isEditando;
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
 
         jRadioButtonEstado.setEnabled(true);
+        jRadioButtonEstado.setSelected(true);
         jButtonGuardar.setEnabled(true);
 
         jlTitulo = new javax.swing.JLabel();
@@ -264,9 +273,8 @@ private  boolean isEditando;
         jButtonModificar.setEnabled(false);
         jButtonBuscar.setEnabled(false);
 
-       // MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
-
-       // List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
+        // MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
+        // List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
 //******************************************************************************
         // Encuentra el último ID en la lista
 //        int ultimoId = 0;
@@ -293,13 +301,12 @@ private  boolean isEditando;
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
 
-
 //        Para lograr que un botón permita editar los campos cuando se pulsa una vez y guardar
 //        los cambios cuando se pulsa nuevamente,  utilizo una variable booleana que
 //        cambia su valor cada vez que se pulsa el botón
-             jButtonGuardar.setEnabled(false);
-             jButtonEliminar.setEnabled(false);
-             jButtonNuevo.setEnabled(false);
+        jButtonGuardar.setEnabled(false);
+        jButtonEliminar.setEnabled(false);
+        jButtonNuevo.setEnabled(false);
         try {
             if (!isEditando) {
                 // Habilitar la edición de los campos de texto
@@ -318,37 +325,33 @@ private  boolean isEditando;
                 // Crear una instancia de MateriaData y modificar la Materia
                 MateriaData modificar = new MateriaData();
 
-               
-                
-                 List<Materia> materiasDuplicadas = modificar.buscarMateriasDuplicadas();
-        
-        // Validar si la materia actual está duplicada
-        boolean isDuplicada = false;
-        for (Materia duplicada : materiasDuplicadas) {
-            if (duplicada.getNombre().equals(materia.getNombre()) && duplicada.getAnioMateria() == materia.getAnioMateria()) {
-                isDuplicada = true;
-                break;
-            } 
-                 
-            
-        }
-        
-        if (!isDuplicada) {
-            modificar.modificarMateria(materia);
-            jTConsulta.setText("");
-            jTextIdVista.setText("");
-            jTextFieldNombre.setText("");
-            jTextFieldAnio.setText("");
-            jRadioButtonEstado.setText("");
-            // Deshabilitar la edición de los campos de texto
-            jTextFieldNombre.setEditable(false);
-            jTextFieldAnio.setEditable(false);
-            jRadioButtonEstado.setEnabled(false);
-            isEditando = false; // Cambia a modo no edición
-        } else {
-            JOptionPane.showMessageDialog(this, "Ya existe una materia con el mismo nombre y año.");
-        }
-    
+                List<Materia> materiasDuplicadas = modificar.buscarMateriasDuplicadas();
+
+                // Validar si la materia actual está duplicada
+                boolean isDuplicada = false;
+                for (Materia duplicada : materiasDuplicadas) {
+                    if (duplicada.getNombre().equals(materia.getNombre()) && duplicada.getAnioMateria() == materia.getAnioMateria()) {
+                        isDuplicada = true;
+                        break;
+                    }
+
+                }
+
+                if (!isDuplicada) {
+                    modificar.modificarMateria(materia);
+                    jTConsulta.setText("");
+                    jTextIdVista.setText("");
+                    jTextFieldNombre.setText("");
+                    jTextFieldAnio.setText("");
+                    jRadioButtonEstado.setText("");
+                    // Deshabilitar la edición de los campos de texto
+                    jTextFieldNombre.setEditable(false);
+                    jTextFieldAnio.setEditable(false);
+                    jRadioButtonEstado.setEnabled(false);
+                    isEditando = false; // Cambia a modo no edición
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ya existe una materia con el mismo nombre y año.");
+                }
 
                 // Deshabilitar la edición de los campos de texto
                 jTextFieldNombre.setEditable(false);
@@ -362,11 +365,29 @@ private  boolean isEditando;
         }
 
 
-
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        // TODO add your handling code here:
+
+        try {
+            // Obtener el ID de la materia
+            int id = Integer.parseInt(jTextIdVista.getText());
+
+            // Crear una instancia de MateriaData
+            MateriaData mat = new MateriaData();
+
+            // Llamar al método eliminarMateria
+            mat.eliminarMateria(id);
+
+            // Limpia los campos del formulario después de eliminar
+            jTextIdVista.setText("");
+            jTextFieldNombre.setText("");
+            jTextFieldAnio.setText("");
+            jRadioButtonEstado.setSelected(false);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
+        }
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
@@ -391,14 +412,14 @@ private  boolean isEditando;
             // Resto del código para crear y guardar la Materia
             Materia nuevaMateria = new Materia(anio, nombre, estado);
             MateriaData materiaData = new MateriaData();
-            
+
             for (Materia materiaExistente : materiaData.listarMateria()) {
-    if (materiaExistente.getNombre().equals(nombre) && materiaExistente.getAnioMateria()== anio) {
-        JOptionPane.showMessageDialog(this, "Ya existe una materia con el mismo nombre y año.");
-        return; // No agregues la nueva materia si ya existe una igual
-    }
-}
-            
+                if (materiaExistente.getNombre().equals(nombre) && materiaExistente.getAnioMateria() == anio) {
+                    JOptionPane.showMessageDialog(this, "Ya existe una materia con el mismo nombre y año.");
+                    return; // No agregues la nueva materia si ya existe una igual
+                }
+            }
+
             materiaData.guardarMateria(nuevaMateria); // Invocar el método para guardar
 
             // Cerrar la ventana actual
@@ -415,6 +436,10 @@ private  boolean isEditando;
 
 
     }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jTConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTConsultaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTConsultaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

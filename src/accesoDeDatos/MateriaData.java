@@ -77,7 +77,6 @@ public class MateriaData {
             ps.setInt(2, materia.getAnioMateria());
             ps.setInt(3, materia.getIdMateria());
 
-
             int exito = ps.executeUpdate();
 
             if (exito == 1) {
@@ -131,15 +130,9 @@ public class MateriaData {
                 materia.setEstado(true);
 
             } else {
-
                 JOptionPane.showMessageDialog(null, "No existe esa Materia ");
 
-                materia.setIdMateria(-1); // Por ejemplo, -1 puede representar una materia inexistente
-                materia.setNombre(""); // Establece un nombre vacío
-                materia.setAnioMateria(-1); // Un valor negativo o -1 puede representar que el año no está definido
-                materia.setEstado(false); // Establece el estado en "false"
             }
-
             ps.close();
 
         } catch (SQLException ex) {
@@ -178,26 +171,25 @@ public class MateriaData {
         }
         return materias;
     }
-    
+
     //*************************************************************************
-            //      materias repetidas
-    
+    //      materias repetidas
     public List<Materia> buscarMateriasDuplicadas() {
-    String sql = "SELECT nombre, anio FROM materia GROUP BY nombre, anio HAVING COUNT(*) > 1";
-    ArrayList<Materia> materiasDuplicadas = new ArrayList<>();
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Materia materia = new Materia();
-            materia.setNombre(rs.getString("nombre"));
-            materia.setAnioMateria(rs.getInt("anio"));
-            materiasDuplicadas.add(materia);
+        String sql = "SELECT nombre, anio FROM materia GROUP BY nombre, anio HAVING COUNT(*) > 1";
+        ArrayList<Materia> materiasDuplicadas = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Materia materia = new Materia();
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnioMateria(rs.getInt("anio"));
+                materiasDuplicadas.add(materia);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar materias duplicadas...");
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al buscar materias duplicadas...");
+        return materiasDuplicadas;
     }
-    return materiasDuplicadas;
-}
 
 }
