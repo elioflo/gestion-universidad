@@ -7,7 +7,10 @@ package vistas;
 
 import accesoDeDatos.InscripcionData;
 import entidades.*;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +22,7 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
 
   private final DefaultTableModel model;
   private final InscripcionData inscripcionData;
+  private List<SimpleEntry<Inscripcion, Boolean>> inscripciones;
 
   /**
    * Creates new form ManipulacionNotas
@@ -120,6 +124,11 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
     jScrollPane1.setViewportView(tabla);
 
     guardarBtn.setText("Guardar");
+    guardarBtn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        guardarBtnActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
@@ -183,7 +192,20 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
 
   private void alumnosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_alumnosItemStateChanged
     llenarTabla(inscripcionesDeAlumno(alumnoSeleccionado()));
+    initBtn();
   }//GEN-LAST:event_alumnosItemStateChanged
+
+  private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
+    inscripciones.forEach(inscripcion -> {
+      if (inscripcion.getValue()) {
+        inscripcionData.actualizarNota(inscripcion.getKey().getAlumno().getIdAlumno(),
+                inscripcion.getKey().getMateria().getIdMateria(),
+                obtenerNota(inscripciones.indexOf(inscripcion), 2));
+        inscripcion.setValue(Boolean.FALSE);
+      }
+    });
+    initBtn();
+  }//GEN-LAST:event_guardarBtnActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JComboBox<entidades.Alumno> alumnos;
@@ -200,7 +222,11 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
 
   private void llenarTabla(List<Inscripcion> inscripciones) {
     limpiarTabla();
-    inscripciones.forEach(inscripcion -> model.addRow(inscripcion.getData()));
+    this.inscripciones = new ArrayList<>();
+    inscripciones.forEach(inscripcion -> {
+      this.inscripciones.add(new SimpleEntry<>(inscripcion, Boolean.FALSE));
+      model.addRow(inscripcion.getData());
+    });
   }
 
   private List<Inscripcion> inscripcionesDeAlumno(Alumno alumno) {
@@ -216,6 +242,7 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
     model.addColumn("Nombre");
     model.addColumn("Nota");
     tabla.setModel(model);
+    llenarTabla(inscripcionesDeAlumno(alumnoSeleccionado()));
   }
 
   private Alumno alumnoSeleccionado() {
@@ -227,8 +254,27 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
   }
 
   private void habilitarGuardar(TableModelEvent evt) {
-    if (evt.getType() == TableModelEvent.UPDATE) {
+    if (evt.getType() == TableModelEvent.UPDATE && notaModificada(evt.getFirstRow(), evt.getColumn())) {
       guardarBtn.setEnabled(true);
+      inscripciones.get(evt.getFirstRow()).setValue(Boolean.TRUE);
     }
   }
+
+  private boolean notaModificada(int row, int column) {
+    int nuevaNota = -1;
+    int nota = inscripciones.get(row).getKey().getNota();
+    try {
+      nuevaNota = Integer.parseInt(model.getValueAt(row, column).toString());
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(null, "Ingrese una nota valida!!\nSolo numero enteros.");
+      model.setValueAt(nota, row, column);
+      return false;
+    }
+    return nota != nuevaNota;
+  }
+
+  private int obtenerNota(int row, int column) {
+    return Integer.parseInt(model.getValueAt(row, column).toString());
+  }
+
 }
