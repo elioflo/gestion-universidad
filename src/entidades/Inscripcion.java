@@ -71,8 +71,6 @@ public class Inscripcion {
   }
 
   public Object[] getData() {
-    System.out.println(materia.getIdMateria());
-    System.out.println(materia.getNombre());
     return new Object[]{materia.getIdMateria(), materia.getNombre(), nota};
   }
 

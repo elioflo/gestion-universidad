@@ -92,7 +92,6 @@ public class InscripcionData {
                 rs.getBoolean("estado")));
         inscripcion.setNota(rs.getInt("nota"));
 
-        System.out.println(inscripcion);
         inscripciones.add(inscripcion);
       }
     } catch (SQLException ex) {
