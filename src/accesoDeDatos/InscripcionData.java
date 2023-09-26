@@ -180,10 +180,6 @@ public class InscripcionData {
       ps.setInt(3, idMateria);
       int exito = ps.executeUpdate();
 
-      if (exito == 1) {
-        JOptionPane.showMessageDialog(null, "Nota actualizada!");
-      }
-
     } catch (SQLException ex) {
       JOptionPane.showMessageDialog(null, "No se pudo actualizar la nota!");
     }

@@ -200,10 +200,11 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
       if (inscripcion.getValue()) {
         inscripcionData.actualizarNota(inscripcion.getKey().getAlumno().getIdAlumno(),
                 inscripcion.getKey().getMateria().getIdMateria(),
-                obtenerNota(inscripciones.indexOf(inscripcion), 2));
+                obtenerNota(inscripciones.indexOf(inscripcion)));
         inscripcion.setValue(Boolean.FALSE);
       }
     });
+    JOptionPane.showMessageDialog(null, "Se actualizaron las notas correctamente!");
     initBtn();
   }//GEN-LAST:event_guardarBtnActionPerformed
 
@@ -254,27 +255,30 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
   }
 
   private void habilitarGuardar(TableModelEvent evt) {
-    if (evt.getType() == TableModelEvent.UPDATE && notaModificada(evt.getFirstRow(), evt.getColumn())) {
+    if (evt.getType() == TableModelEvent.UPDATE && notaModificada(evt.getFirstRow())) {
       guardarBtn.setEnabled(true);
       inscripciones.get(evt.getFirstRow()).setValue(Boolean.TRUE);
     }
   }
 
-  private boolean notaModificada(int row, int column) {
+  private boolean notaModificada(int row) {
     int nuevaNota = -1;
     int nota = inscripciones.get(row).getKey().getNota();
     try {
-      nuevaNota = Integer.parseInt(model.getValueAt(row, column).toString());
+      nuevaNota = obtenerNota(row);
+      if (nuevaNota < 0 || 10 < nuevaNota) {
+        throw new NumberFormatException();
+      }
     } catch (NumberFormatException e) {
-      JOptionPane.showMessageDialog(null, "Ingrese una nota valida!!\nSolo numero enteros.");
-      model.setValueAt(nota, row, column);
+      JOptionPane.showMessageDialog(null, "Ingrese una nota valida! (0-10)\nSolo numero enteros.");
+      model.setValueAt(nota, row, 2);
       return false;
     }
     return nota != nuevaNota;
   }
 
-  private int obtenerNota(int row, int column) {
-    return Integer.parseInt(model.getValueAt(row, column).toString());
+  private int obtenerNota(int row) {
+    return Integer.parseInt(model.getValueAt(row, 2).toString());
   }
 
 }
