@@ -29,6 +29,7 @@ public class AlumnosXMateria extends javax.swing.JInternalFrame {
         initComponents();
         armarCabecera();
         initButtons();
+        llenarTabla();
     }
    
 

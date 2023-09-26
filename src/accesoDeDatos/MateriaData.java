@@ -143,7 +143,7 @@ public class MateriaData {
 
     //***************************************************************************************************************
     //      LISTAR  
-    public List<Materia> listarMateria() {
+    public  List<Materia> listarMateria() {
 
         String sql = "SELECT  idMateria ,nombre , anio ,estado FROM materia WHERE  estado=1";
         ArrayList<Materia> materias = new ArrayList<>();
@@ -175,7 +175,7 @@ public class MateriaData {
     //*************************************************************************
     //      materias repetidas
     public List<Materia> buscarMateriasDuplicadas() {
-        String sql = "SELECT nombre, anio FROM materia GROUP BY nombre, anio HAVING COUNT(*) > 1";
+        String sql = "SELECT nombre, anio FROM materia WHERE nombre=? AND anio = ?";
         ArrayList<Materia> materiasDuplicadas = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
