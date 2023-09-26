@@ -261,17 +261,17 @@ public class ManipulacionNotas extends javax.swing.JInternalFrame {
     }
   }
 
-  private boolean notaModificada(int row) {
+  private boolean notaModificada(int fila) {
     int nuevaNota = -1;
-    int nota = inscripciones.get(row).getKey().getNota();
+    int nota = inscripciones.get(fila).getKey().getNota();
     try {
-      nuevaNota = obtenerNota(row);
+      nuevaNota = obtenerNota(fila);
       if (nuevaNota < 0 || 10 < nuevaNota) {
         throw new NumberFormatException();
       }
     } catch (NumberFormatException e) {
       JOptionPane.showMessageDialog(null, "Ingrese una nota valida! (0-10)\nSolo numero enteros.");
-      model.setValueAt(nota, row, 2);
+      model.setValueAt(nota, fila, 2);
       return false;
     }
     return nota != nuevaNota;

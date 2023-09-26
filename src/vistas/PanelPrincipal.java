@@ -150,7 +150,7 @@ public class PanelPrincipal extends javax.swing.JFrame {
     private void Alumno_formularioAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Alumno_formularioAlumnoActionPerformed
     escritorio.removeAll();
     escritorio.repaint();
-    FormularioAlumno form = new FormularioAlumno();
+    FormularioAlumno form = new FormularioAlumno(alumnoData);
     form.setVisible(true);
     escritorio.add(form);
     }//GEN-LAST:event_Alumno_formularioAlumnoActionPerformed

@@ -20,7 +20,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManejoInscripciones extends javax.swing.JInternalFrame {
 
-  private final DefaultTableModel model = new DefaultTableModel();
+  private final DefaultTableModel model = new DefaultTableModel() {
+    @Override
+    public boolean isCellEditable(int row, int column) {
+      return false;
+    }
+  };
   private final InscripcionData inscripcionData;
   private final MateriaData materiaData;
   private final AlumnoData alumnoData;
@@ -170,6 +175,11 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
     botones.add(filler2);
 
     jButton3.setText("Salir");
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton3ActionPerformed(evt);
+      }
+    });
     botones.add(jButton3);
 
     javax.swing.GroupLayout listadoDeMateriasLayout = new javax.swing.GroupLayout(listadoDeMaterias);
@@ -281,6 +291,10 @@ public class ManejoInscripciones extends javax.swing.JInternalFrame {
       JOptionPane.showMessageDialog(null, "Seleccione una materia!");
     }
   }//GEN-LAST:event_anularBtnActionPerformed
+
+  private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    this.dispose();
+  }//GEN-LAST:event_jButton3ActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JComboBox<entidades.Alumno> alumnos;
