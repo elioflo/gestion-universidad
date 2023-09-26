@@ -23,15 +23,15 @@ public class PanelPrincipal extends javax.swing.JFrame {
    */
   public PanelPrincipal() {
     Connection con = Conexion.getConnection();
-    inscripcionData = new InscripcionData();
-    materiaData = new MateriaData();
-    alumnoData = new AlumnoData();
     if (con != null) {
       initComponents();
       setLocationRelativeTo(null);
     } else {
       System.exit(0);
     }
+    inscripcionData = new InscripcionData();
+    materiaData = new MateriaData();
+    alumnoData = new AlumnoData();
   }
 
   /**
