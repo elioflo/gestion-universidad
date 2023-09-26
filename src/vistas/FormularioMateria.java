@@ -226,7 +226,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                 jTextIdVista.setEditable(false);
                 jRadioButtonEstado.setText(String.valueOf(materiaEncontrada.isEstado()));
                 jRadioButtonEstado.setEnabled(false);   //*******************************************************************
-                
+
                 jTConsulta.setText("");
                 jButtonGuardar.setEnabled(false);
                 //jButtonEliminar.setEnabled(false);
@@ -273,23 +273,23 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
         jButtonModificar.setEnabled(false);
         jButtonBuscar.setEnabled(false);
 
-        // MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
-        // List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
+        MateriaData materiaData = new MateriaData();                              //  instancia de MateriaData llamada "materiaData"
+        List<Materia> listaMaterias = materiaData.listarMateria();               // Obtén la lista de materias
 //******************************************************************************
-        // Encuentra el último ID en la lista
-//        int ultimoId = 0;
-//        for (Materia materia : listaMaterias) {
-//            if (materia.getIdMateria() > ultimoId) {
-//                ultimoId = materia.getIdMateria();
-//            }
-//        }
-//
-//         Calcula el próximo ID disponible
-//        int ultimo = ultimoId + 1;
-//
-//        jTextIdVista.setText(String.valueOf(ultimo));
+        //    Encuentra el último ID en la lista
+        int ultimoId = 0;
+        for (Materia materia : listaMaterias) {
+            if (materia.getIdMateria() > ultimoId) {
+                ultimoId = materia.getIdMateria();
+            }
+        }
+
+        //  Calcula el próximo ID disponible
+        int ultimo = ultimoId + 1;
+
+        jTextIdVista.setText(String.valueOf(ultimo));
 //****************************************************************************** 
-        jTextIdVista.setText("");
+        //   jTextIdVista.setText("");
         jTextIdVista.setEditable(false);
 
 
@@ -322,49 +322,48 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                 materia.setIdMateria(Integer.parseInt(jTextIdVista.getText()));
                 materia.setEstado(jRadioButtonEstado.isSelected());
 
-                // Crear una instancia de MateriaData y modificar la Materia
+                //  Crear una instancia de MateriaData y modificar la Materia
+                String nombre = jTextFieldNombre.getText();
+                String anioTexto = jTextFieldAnio.getText();
+                boolean estado = jRadioButtonEstado.isSelected();
+
+                // Validar que los campos obligatorios no estén vacíos
+                if (nombre.isEmpty() || anioTexto.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.");
+                    return; // No continuar si los datos no son válidos
+                }
+
+                int anio;
+
+                // Intentar convertir la cadena de texto a un entero
+                anio = Integer.parseInt(anioTexto);
+
+                // Resto del código para crear y guardar la Materia
+              //  Materia nuevaMateria = new Materia(anio, nombre, estado);
+                
                 MateriaData modificar = new MateriaData();
-
-                List<Materia> materiasDuplicadas = modificar.buscarMateriasDuplicadas();
-
-                // Validar si la materia actual está duplicada
-                boolean isDuplicada = false;
-                for (Materia duplicada : materiasDuplicadas) {
-                    if (duplicada.getNombre().equals(materia.getNombre()) && duplicada.getAnioMateria() == materia.getAnioMateria()) {
-                        isDuplicada = true;
-                        break;
+                
+                 // Verificar si ya existe una materia con el mismo nombre y año
+                for (Materia materiaExistente : modificar.listarMateria()) {
+                    if (materiaExistente.getNombre().equals(nombre) && materiaExistente.getAnioMateria() == anio) {
+                        JOptionPane.showMessageDialog(this, "Ya existe una materia con el mismo nombre y año.");
+                         isEditando = false; // Restablece isEditando a false
+                        return; // No agregues la nueva materia si ya existe una igual
                     }
-
                 }
-
-                if (!isDuplicada) {
-                    modificar.modificarMateria(materia);
-                    jTConsulta.setText("");
-                    jTextIdVista.setText("");
-                    jTextFieldNombre.setText("");
-                    jTextFieldAnio.setText("");
-                    jRadioButtonEstado.setText("");
-                    // Deshabilitar la edición de los campos de texto
-                    jTextFieldNombre.setEditable(false);
-                    jTextFieldAnio.setEditable(false);
-                    jRadioButtonEstado.setEnabled(false);
-                    isEditando = false; // Cambia a modo no edición
-                } else {
-                    JOptionPane.showMessageDialog(this, "Ya existe una materia con el mismo nombre y año.");
-                }
-
-                // Deshabilitar la edición de los campos de texto
-                jTextFieldNombre.setEditable(false);
-                jTextFieldAnio.setEditable(false);
-                jRadioButtonEstado.setEnabled(false);
-                isEditando = false; // Cambia a modo no edición
-
-            }
+                // Realizar la modificación de la materia en la base de datos
+                modificar.modificarMateria(materia);
+                // Limpiar los campos de texto y deshabilitar la edición
+                jTextFieldNombre.setText("");
+            jTextFieldAnio.setText("");
+            jTextIdVista.setText("");
+            jRadioButtonEstado.setText("");
+// Cambia a modo no edición
+            isEditando = false;
+            }          //***********************************************************
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
+             JOptionPane.showMessageDialog(this, "Por favor, ingrese un año válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
