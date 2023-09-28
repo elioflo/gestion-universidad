@@ -357,12 +357,13 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
                 jTextFieldAnio.setText("");
                 jTextIdVista.setText("");
                 jRadioButtonEstado.setText("");
-// Cambia a modo no edición
+                // Cambia a modo no edición
                 isEditando = false;
             }         
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,"Por favor, complete todos los campos");
-        }
+            JOptionPane.showMessageDialog(this,"Por favor, coloque un numero valido");
+            
+           }
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
@@ -397,7 +398,7 @@ public class FormularioMateria extends javax.swing.JInternalFrame {
 
         // Validar que los campos obligatorios no estén vacíos
         if (nombre.isEmpty() || anioTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos");
+            JOptionPane.showMessageDialog(this, "Por favor, complete el campo");
             return; // No continúes si los datos no son válidos
         }
 

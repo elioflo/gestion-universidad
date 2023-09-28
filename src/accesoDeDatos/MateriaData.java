@@ -180,8 +180,9 @@ public class MateriaData {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+            Materia materia = new Materia();
             while (rs.next()) {
-                Materia materia = new Materia();
+              
                 materia.setNombre(rs.getString("nombre"));
                 materia.setAnioMateria(rs.getInt("anio"));
                 materiasDuplicadas.add(materia);
