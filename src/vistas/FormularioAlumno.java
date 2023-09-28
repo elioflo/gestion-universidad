@@ -248,10 +248,16 @@ public class FormularioAlumno extends javax.swing.JInternalFrame {
     private void nuevoAlumno_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoAlumno_botonActionPerformed
     try {
       Alumno alumn = new Alumno(Integer.parseInt(documento_text.getText()), apellido_text.getText(), nombre_text.getText(), convertirDate(fecha_chooser.getDate()), estado_boton.isSelected());
-      if (chequeoExcepciones()) {
-        int boole = JOptionPane.showConfirmDialog(null, "¿Desea agregar este alumno?");
-        if (boole == 0) {
-          alumnoData.guardarAlumno(alumn);
+      Alumno aux = alumnoData.buscarAlumnoPorDni(Integer.parseInt(documento_text.getText()));
+
+      if (aux != null) {
+        alumnoData.modificarEstado(aux);
+      } else {
+        if (chequeoExcepciones()) {
+          int boole = JOptionPane.showConfirmDialog(null, "¿Desea agregar este alumno?");
+          if (boole == 0) {
+            new AlumnoData().guardarAlumno(alumn);
+          }
         }
       }
     } catch (NumberFormatException ex) {
